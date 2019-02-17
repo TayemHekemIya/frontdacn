@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>GoPro Crawl</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/rootApp.js"></script>
+    <script src="js/search.js"></script>
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        
+    <![endif]-->
+
+</head>
+
+<body ng-app = "rootApp" ng-controller = "search" style="background-attachment: fixed" background="background.jpg">
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                	<span class="glyphicon glyphicon-send"></span> 
+                </a>
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">GoPro Inc</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Content -->
+    <div class="container-fluid" style="margin:5px; text-align: center">
+        <div class="col-md-3">
+            <form class="navbar-form navbar-right" role="search" style="border: 3px solid green;border-radius: 5px; margin: 2px; padding: 5px; text-align: center">
+                <input style="margin: 5px" type="text" ng-model = "searchPlace" placeholder="Nhập địa điểm du lịch"><br>
+                <input style="margin: 5px" type="text" ng-model = "searchPriceF" placeholder="Giá thấp nhất"><br>
+                <input style="margin: 5px" type="text" ng-model = "searchPriceT" placeholder="Giá cao nhất"><br>
+                <input type="submit" ng-click="callAPI(searchPlace, searchPriceF, searchPriceT)" value="search" id="find">
+            </form>
+        </div>
+        <div class="col-md-6" style="margin: 10px">
+            <div class="row">
+                    <div class="tab">
+                            <button class="tablinks" onclick="openComp(event, 'SaigonTourist')" id="defaultOpen"><img src="saigonlogo.png" alt="SaiGonT" style="width:100px; height: 50px"></button>
+                            <button class="tablinks" onclick="openComp(event, 'DatVietTour')"><img src="datviettourlogo.jpg" alt="DatVieT" style="width:100px; height: 50px"></button>
+                            <button class="tablinks" onclick="openComp(event, 'KimlienTourist')"><img src="daiviet_logo.png" alt="KimLienT" style="width:100px; height: 50px"></button>
+                    </div>
+
+                    <div id="SaigonTourist" class="tabcontent">
+                            <div class="container-fluid" ng-repeat="result in r1" style="margin: 10px; border: 2px solid green; background-color: white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-3" style="auto-align: center; border-right: 2px solid green">
+                                                        <img src="{{result.img}}" alt="MinhHoa" style="width:140px; height: 125px;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="height: 70px; border-bottom: 2px solid green">
+                                                            <h5 style="text-align: center; font-weight: bold; color: #1e64c6">{{result.name}}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6" style="border-right: 2px solid green">
+                                                            <p>GIÁ:</p>
+                                                            <h5 style="text-align: center; color: #DAA520">{{result.price}} VND</h5>
+                                                        </div>
+                                                        <div class="col-md-6" style="text-align: center; align-items: center">
+                                                            <p>CHI TIẾT</p>
+                                                            <a style="color: #cc5500" href="{{result.url}}" target="_blank"><span class="glyphicon glyphicon-log-in"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>   
+                    </div>
+
+                    <div id="DatVietTour" class="tabcontent">
+                            <div class="container-fluid" ng-repeat="result in r2" style="margin: 10px; border: 2px solid green; background-color: white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-3" style="auto-align: center; border-right: 2px solid green">
+                                                        <img src="{{result.img}}" alt="MinhHoa" style="width:140px; height: 125px;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="height: 70px; border-bottom: 2px solid green">
+                                                            <h5 style="text-align: center; font-weight: bold; color: #1e64c6">{{result.name}}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6" style="border-right: 2px solid green">
+                                                            <p>GIÁ:</p>
+                                                            <h5 style="text-align: center; color: #DAA520">{{result.price}} VND</h5>
+                                                        </div>
+                                                        <div class="col-md-6" style="text-align: center; align-items: center">
+                                                            <p>CHI TIẾT</p>
+                                                            <a style="color: #cc5500" href="{{result.url}}" target="_blank"><span class="glyphicon glyphicon-log-in"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>   
+                    </div>
+
+                    <div id="KimlienTourist" class="tabcontent">
+                            <div class="container-fluid" ng-repeat="result in r3" style="margin: 10px; border: 2px solid green; background-color: white">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-3" style="auto-align: center; border-right: 2px solid green">
+                                                        <img src="{{result.img}}" alt="MinhHoa" style="width:140px; height: 125px;">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-12" style="height: 70px; border-bottom: 2px solid green">
+                                                            <h5 style="text-align: center; font-weight: bold; color: #1e64c6">{{result.name}}</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6" style="border-right: 2px solid green">
+                                                            <p>GIÁ:</p>
+                                                            <h5 style="text-align: center; color: #DAA520">{{result.price}} VND</h5>
+                                                        </div>
+                                                        <div class="col-md-6" style="text-align: center; align-items: center">
+                                                            <p>CHI TIẾT</p>
+                                                            <a style="color: #cc5500" href="{{result.url}}" target="_blank"><span class="glyphicon glyphicon-log-in"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>   
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script src="js/jquery-1.11.3.min.js"></script>
+	
+	<!-- IE10 viewport bug workaround -->
+	<script src="js/ie10-viewport-bug-workaround.js"></script>
+	
+	<!-- Placeholder Images -->
+	<script src="js/holder.min.js"></script>
+    
+    
+    <script>        
+        function openComp(evt, compName) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(compName).style.display = "block";
+          evt.currentTarget.className += " active";
+        }
+
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+        } else {
+        document.getElementById("myBtn").style.display = "none";
+        }
+        }   
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+
+        document.getElementById("defaultOpen").click();
+    </script>     
+</body>
+
+
+</html>
